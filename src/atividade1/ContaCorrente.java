@@ -30,7 +30,10 @@ public class ContaCorrente {
     }
 
 
-    public void depositar(double valor) {
+    public void depositar(double valor) throws DepositoIvalidoException{
+        if (valor < 0) {
+            throw new DepositoIvalidoException();
+        }
         this.saldo += valor;
         this.extrato.add("Cliente: "+ cliente.getNome()+ " "+cliente.getSobreNome()+" Depositou "+ valor+ "R$ em "+ this.getData() + " Com o cpf de "+ cliente.getCpf());
     }
@@ -41,12 +44,12 @@ public class ContaCorrente {
     }
 
 
-    public  double sacar(double valor) {
+    public  double sacar(double valor) throws EstouroSaqueException{
         if (this.saldo >= valor) {
             this.saldo -= valor;
             this.extrato.add("Cliente: "+ cliente.getNome()+ " "+cliente.getSobreNome()+" Sacou "+ valor+ "R$ em "+ this.getData() + " Com o cpf de "+ cliente.getCpf());
         }else {
-            System.out.println("Não possui saldo suficiente");
+            throw new EstouroSaqueException();
         }
 
         return this.saldo;

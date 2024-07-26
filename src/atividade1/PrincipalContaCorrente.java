@@ -8,9 +8,19 @@ public class PrincipalContaCorrente {
         ContaCorrente c1 = new ContaCorrente(123, cliente1);
         ContaCorrente c2 = new ContaCorrente(321, cliente2);
 
-        c1.depositar(100);
-        c1.sacar(50);
-        c2.depositar(100);
+        try {
+            c1.depositar(-2);
+            c2.depositar(100);
+        }catch (DepositoIvalidoException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            c1.sacar(50);
+        }catch (EstouroSaqueException e) {
+            System.out.println(e.getMessage());
+        }
+
         c1.transferir(c2, 10);
 
         c1.exibirExtrato();
